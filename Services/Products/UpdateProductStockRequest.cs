@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace App.Services.Products
 {
-    public record UpdateProductRequest(string Name, decimal Price, int Stock);
+    public record UpdateProductStockRequest(int productId, int quantity);
 
 }

@@ -1,10 +1,14 @@
 using App.Repositories;
 using App.Repositories.Extensions;
 using App.Services.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 // Add services to the container.
 
 builder.Services.AddControllers();

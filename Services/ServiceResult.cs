@@ -12,11 +12,15 @@ namespace App.Services
     {
         public T? Data { get; set; }
         public List<string> ErrorMessage { get; set; } = new List<string>();
-        
+
+        [JsonIgnore]
         public bool IsSuccess => ErrorMessage == null || ErrorMessage.Count == 0;
-        
+        [JsonIgnore]
         public bool IsFail => !IsSuccess;
+        [JsonIgnore]
         public HttpStatusCode Status { get; set; }
+        [JsonIgnore]
+        public string? UrlAsCreated { get; set; }
 
         //Static factory methods to create success and fail results
         public static ServiceResult<T> Success(T data, HttpStatusCode status=HttpStatusCode.OK)
@@ -25,6 +29,16 @@ namespace App.Services
             {
                 Data = data,
                 Status = status
+            };
+        }
+
+        public static ServiceResult<T> SuccessAsCreated(T data,string urlAsCreated)
+        {
+            return new ServiceResult<T>()
+            {
+                Data = data,
+                Status = HttpStatusCode.Created,
+                UrlAsCreated = urlAsCreated
             };
         }
         public static ServiceResult<T> Fail(List<string> errorMessages, HttpStatusCode status=HttpStatusCode.BadRequest)
@@ -51,7 +65,6 @@ namespace App.Services
         
         [JsonIgnore]
         public bool IsSuccess => ErrorMessage == null || ErrorMessage.Count == 0;
-
         [JsonIgnore]
         public bool IsFail => !IsSuccess;
         [JsonIgnore]

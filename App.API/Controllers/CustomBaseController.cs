@@ -14,15 +14,19 @@ namespace App.API.Controllers
         {
             if (result.Status == HttpStatusCode.NoContent)
             {
-                return new ObjectResult(null) { StatusCode = result.Status.GetHashCode() };
+                return NoContent();
             }
-            else
+
+            if (result.Status == HttpStatusCode.Accepted)
             {
-                return new ObjectResult(result)
-                {
-                    StatusCode = result.Status.GetHashCode()
-                };
+
+                return Created(result.UrlAsCreated, result);
+
             }
+
+            return new ObjectResult(result) {
+                StatusCode = result.Status.GetHashCode() };
+
         }
         [NonAction]
         public IActionResult CreateActionResult(ServiceResult result)

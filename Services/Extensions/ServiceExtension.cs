@@ -6,8 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace App.Services.Extensions
 {
@@ -17,6 +20,9 @@ namespace App.Services.Extensions
         {
            
             services.AddScoped<IProductService, ProductService>();
+
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssembly(Assembly.GetEntryAssembly());
             return services;
         }
     }
