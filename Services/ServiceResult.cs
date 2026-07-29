@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace App.Services
@@ -11,7 +12,7 @@ namespace App.Services
     {
         public T? Data { get; set; }
         public List<string> ErrorMessage { get; set; } = new List<string>();
-
+        
         public bool IsSuccess => ErrorMessage == null || ErrorMessage.Count == 0;
         
         public bool IsFail => !IsSuccess;
@@ -38,21 +39,22 @@ namespace App.Services
         {
             return new ServiceResult<T>()
             {
-                ErrorMessage = [errorMessage]
+                ErrorMessage = new List<string> { errorMessage },
+                Status = status
             };
         }
     }
     public class ServiceResult
     {
         
-        public List<string> ErrorMessage { get; set; } = new List<string>();
+        public List<string>? ErrorMessage { get; set; }
+        
+        [JsonIgnore]
+        public bool IsSuccess => ErrorMessage == null || ErrorMessage.Count == 0;
 
-        public bool IsSuccess()
-        {
-            return ErrorMessage == null || ErrorMessage.Count == 0;
-
-        }
-        public bool IsFail => !IsSuccess();
+        [JsonIgnore]
+        public bool IsFail => !IsSuccess;
+        [JsonIgnore]
         public HttpStatusCode Status { get; set; }
 
         //Static factory methods to create success and fail results
@@ -76,7 +78,8 @@ namespace App.Services
         {
             return new ServiceResult()
             {
-                ErrorMessage = [errorMessage]
+                ErrorMessage = new List<string> { errorMessage },
+                Status = status
             };
         }
     }
