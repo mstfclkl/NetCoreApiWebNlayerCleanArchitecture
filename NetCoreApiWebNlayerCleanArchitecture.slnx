@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="App.API/App.API.csproj" Id="e61968a5-ff48-45dd-b97d-d0bed9259c72" />
+  <Project Path="Repositories/App.Repositories.csproj" Id="b5c624d8-630b-41f5-8aad-14da6f8486b7" />
+  <Project Path="Services/App.Services.csproj" Id="5b1b493b-8b91-47f8-8f49-e4539f40b887" />
+</Solution>
