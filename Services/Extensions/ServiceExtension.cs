@@ -1,6 +1,11 @@
 ﻿using App.Repositories;
 using App.Repositories.Products;
+using App.Services.Categories;
+using App.Services.ExceptionHandlers;
 using App.Services.Products;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -9,10 +14,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using App.Services.Categories;
-using App.Services.ExceptionHandlers;
-using FluentValidation;
-using FluentValidation.AspNetCore;
 
 namespace App.Services.Extensions
 {
@@ -20,7 +21,12 @@ namespace App.Services.Extensions
     {
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
-           
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
 

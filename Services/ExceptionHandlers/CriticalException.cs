@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Services.Products
+namespace App.Services.ExceptionHandlers
 {
-    public record CreateProductRequest(string Name, decimal Price, int Stock);
+    public class CriticalException(string message) : Exception(message);
+
 }

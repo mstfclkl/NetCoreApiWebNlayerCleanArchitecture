@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Services.Products
+namespace App.Services.Categories.Update
 {
-    public record UpdateProductStockRequest(int productId, int quantity);
-
+    public record UpdateCategoryRequest(string Name);
 }
